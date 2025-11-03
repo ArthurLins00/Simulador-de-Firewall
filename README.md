@@ -81,7 +81,7 @@ Projetos Redes/
     └── test_firewall_core.py # Testes unitários
 ```
 
-## Executar testes
+## 💻 Executar testes
 
 ```powershell
 python run_tests.py
