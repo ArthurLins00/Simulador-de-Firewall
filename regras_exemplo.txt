@@ -1,0 +1,19 @@
+# Arquivo de exemplo de regras de firewall
+# Formato: ACTION TIPO VALOR
+# ACTION pode ser: ALLOW ou BLOCK
+# TIPO pode ser: IP ou PORT
+# VALOR: IP (x.x.x.x) ou PORT (número)
+
+# Bloquear IPs suspeitos
+BLOCK IP 192.168.1.100
+BLOCK IP 10.0.0.50
+
+# Permitir acesso a portas comuns
+ALLOW PORT 80
+ALLOW PORT 443
+ALLOW PORT 22
+
+# Bloquear portas não seguras
+BLOCK PORT 23
+BLOCK PORT 21
+

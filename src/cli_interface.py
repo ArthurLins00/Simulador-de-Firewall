@@ -3,11 +3,11 @@ Interface de linha de comando para o Firewall Simulator
 """
 
 import argparse
-from firewall_core import FirewallSimulator
+from src.firewall_core import FirewallSimulator
 
 def main():
     banner = """
-    🔥 FIREWALL SIMULATOR 🔥
+    *** FIREWALL SIMULATOR ***
     Simulador de filtragem de pacotes baseado em regras
     ==================================================
     """
@@ -69,38 +69,38 @@ Exemplos de uso:
         
         # Modo interativo
         if args.interactive:
-            print("\n💻 Modo interativo ativo. Digite 'quit' para sair.")
+            print("\n[Modo interativo ativo] Digite 'quit' para sair.")
             while True:
                 try:
-                    user_input = input("\n🎯 Digite pacote (IP:PORTA): ").strip()
+                    user_input = input("\n>> Digite pacote (IP:PORTA): ").strip()
                     if user_input.lower() in ['quit', 'exit', 'sair']:
                         break
                     
                     if ':' in user_input:
                         src_ip, dst_port = user_input.split(':', 1)
                         result = firewall.evaluate_packet(src_ip.strip(), int(dst_port.strip()))
-                        print(f"✅ Resultado: {result}")
+                        print(f"[OK] Resultado: {result}")
                     else:
-                        print("❌ Formato inválido. Use: IP:PORTA")
+                        print("[ERRO] Formato invalido. Use: IP:PORTA")
                         
                 except ValueError:
-                    print("❌ Erro: Porta deve ser um número")
+                    print("[ERRO] Porta deve ser um numero")
                 except KeyboardInterrupt:
-                    print("\n👋 Encerrando...")
+                    print("\n[Encerrando...]")
                     break
         
         # Modo único pacote
         elif args.src_ip and args.dst_port:
             result = firewall.evaluate_packet(args.src_ip, args.dst_port, args.protocol)
-            print(f"\n📊 RESUMO:")
+            print(f"\n[RESUMO]")
             print(f"   Pacote: {args.src_ip} -> :{args.dst_port}/{args.protocol}")
-            print(f"   Decisão: {result}")
+            print(f"   Decisao: {result}")
             
         else:
-            print("💡 Dica: Use --interactive para modo interativo ou forneça --src-ip e --dst-port")
+            print("[DICA] Use --interactive para modo interativo ou forneca --src-ip e --dst-port")
             
     except Exception as e:
-        print(f"❌ Erro durante execução: {e}")
+        print(f"[ERRO] Erro durante execucao: {e}")
 
 if __name__ == "__main__":
     main()
