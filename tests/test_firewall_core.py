@@ -136,7 +136,7 @@ class TestFirewallSimulator(unittest.TestCase):
         """Testa avaliação de pacote que não corresponde a regra IP"""
         self.firewall.add_rule("BLOCK IP 192.168.1.100")
         result = self.firewall.evaluate_packet("192.168.1.200", 80)
-        self.assertEqual(result, "ALLOW")  # Usa política padrão
+        self.assertEqual(result, "ALLOW")
     
     def test_evaluate_packet_port_match_allow(self):
         """Testa avaliação de pacote que corresponde a regra PORT ALLOW"""
@@ -154,13 +154,12 @@ class TestFirewallSimulator(unittest.TestCase):
         """Testa avaliação de pacote que não corresponde a regra PORT"""
         self.firewall.add_rule("BLOCK PORT 80")
         result = self.firewall.evaluate_packet("192.168.1.100", 443)
-        self.assertEqual(result, "ALLOW")  # Usa política padrão
+        self.assertEqual(result, "ALLOW")
     
     def test_evaluate_packet_multiple_rules_first_match(self):
         """Testa que primeira regra correspondente decide"""
         self.firewall.add_rule("ALLOW IP 192.168.1.100")
         self.firewall.add_rule("BLOCK PORT 80")
-        # IP corresponde primeiro, então deve ser ALLOW
         result = self.firewall.evaluate_packet("192.168.1.100", 80)
         self.assertEqual(result, "ALLOW")
     
@@ -174,7 +173,6 @@ class TestFirewallSimulator(unittest.TestCase):
     
     def test_load_rules_from_file(self):
         """Testa carregar regras de arquivo"""
-        # Cria arquivo temporário
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
             f.write("ALLOW IP 192.168.1.100\n")
             f.write("BLOCK PORT 80\n")

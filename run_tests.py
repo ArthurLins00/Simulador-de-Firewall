@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Script para executar todos os testes do projeto
 Uso: python run_tests.py
@@ -8,7 +7,6 @@ import sys
 import os
 import unittest
 
-# Adiciona o diretório raiz ao PYTHONPATH
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
 
@@ -18,7 +16,6 @@ if __name__ == '__main__':
     print("=" * 60)
     print()
     
-    # Descoberta e execução de testes
     loader = unittest.TestLoader()
     suite = loader.discover('tests', pattern='test_*.py')
     runner = unittest.TextTestRunner(verbosity=2)
@@ -35,6 +32,5 @@ if __name__ == '__main__':
         print(f"  Erros: {len(result.errors)}")
     print("=" * 60)
     
-    # Retorna código de saída apropriado
     sys.exit(0 if result.wasSuccessful() else 1)
 

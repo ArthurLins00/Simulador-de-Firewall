@@ -56,18 +56,14 @@ Exemplos de uso:
     
     args = parser.parse_args()
     
-    # Inicializar firewall
     firewall = FirewallSimulator()
     
     try:
-        # Carregar regras
         firewall.load_rules(args.rules)
         
-        # Listar regras se solicitado
         if args.list_rules:
             firewall.list_rules()
         
-        # Modo interativo
         if args.interactive:
             print("\n[Modo interativo ativo] Digite 'quit' para sair.")
             while True:
@@ -89,7 +85,6 @@ Exemplos de uso:
                     print("\n[Encerrando...]")
                     break
         
-        # Modo único pacote
         elif args.src_ip and args.dst_port:
             result = firewall.evaluate_packet(args.src_ip, args.dst_port, args.protocol)
             print(f"\n[RESUMO]")

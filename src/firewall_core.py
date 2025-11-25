@@ -14,7 +14,6 @@ class FirewallSimulator:
             filename (str): Caminho do arquivo de regras
         """
         try:
-            # Tenta abrir com utf-8, se falhar tenta com latin-1 (mais compatível)
             try:
                 with open(filename, 'r', encoding='utf-8') as f:
                     lines = f.readlines()
@@ -24,7 +23,6 @@ class FirewallSimulator:
             
             for line_num, line in enumerate(lines, 1):
                 line = line.strip()
-                # Ignora linhas vazias e comentários
                 if not line or line.startswith('#'):
                     continue
                 try:
@@ -34,7 +32,6 @@ class FirewallSimulator:
         except FileNotFoundError:
             raise FileNotFoundError(f"Arquivo de regras não encontrado: {filename}")
         except ValueError:
-            # Propaga ValueError sem modificação
             raise
         except Exception as e:
             raise Exception(f"Erro ao carregar regras: {e}")
@@ -65,12 +62,10 @@ class FirewallSimulator:
             'protocol': protocol.upper()
         }
         
-        # Avalia regras na ordem (primeira correspondência decide)
         for rule in self.rules:
             if self._matches_rule(packet, rule):
                 return rule['action']
         
-        # Se nenhuma regra corresponde, usa política padrão
         return self.default_policy
     
     def _parse_rule(self, rule_string):
@@ -87,7 +82,7 @@ class FirewallSimulator:
         
         action = parts[0].upper()
         rule_type = parts[1].upper()
-        value = ' '.join(parts[2:])  # Permite valores com espaços (ex: IP ranges)
+        value = ' '.join(parts[2:])
         
         if action not in ['ALLOW', 'BLOCK']:
             raise ValueError(f"Ação inválida: '{action}'. Deve ser ALLOW ou BLOCK")
@@ -95,11 +90,9 @@ class FirewallSimulator:
         if rule_type not in ['IP', 'PORT']:
             raise ValueError(f"Tipo de regra inválido: '{rule_type}'. Deve ser IP ou PORT")
         
-        # Validação de IP básica
         if rule_type == 'IP':
             self._validate_ip(value)
         
-        # Validação de porta
         if rule_type == 'PORT':
             try:
                 port = int(value)
